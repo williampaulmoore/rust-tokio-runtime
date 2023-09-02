@@ -17,10 +17,17 @@ async fn reader() {
 }
 
 async fn run() {
-    sleep().await;
-    reader().await;
-    //let pwd = std::env::current_dir().unwrap();
-    //println!("pwd: {}",pwd.display());
+    tokio::join!(
+        sleep(),
+        reader(),
+        reader(),
+        reader(),
+        reader(),
+        reader(),
+        reader(),
+        reader(),
+        reader(),
+    );
 }
 
 fn main() {
