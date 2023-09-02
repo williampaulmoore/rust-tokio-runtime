@@ -45,14 +45,12 @@ async fn run() {
     );
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     simple_logger::init_with_level(Level::Info).unwrap();
 
     let start = std::time::Instant::now();
-    let rt = tokio::runtime::Runtime::new().unwrap();
-    let future = run();
-
-    rt.block_on(future);
+    run().await;
     let end = std::time::Instant::now();
 
     println!("Took {:?}", end - start);
