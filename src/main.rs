@@ -1,10 +1,26 @@
 use tokio::time;
 use log::Level;
+use tokio::io::AsyncReadExt;
 
-async fn run() {
+async fn sleep() {
     log::info!("Sleeping");
     time::sleep(time::Duration::from_secs(1)).await;
     log::info!("Awake!");
+}
+
+async fn reader() {
+    log::info!("Reading data");
+    let mut f = tokio::fs::File::open("beeg.csv").await.unwrap();
+    let mut contents = vec![];
+    f.read_to_end(&mut contents).await.unwrap();
+    log::info!("Read {} bytes",contents.len());
+}
+
+async fn run() {
+    sleep().await;
+    reader().await;
+    //let pwd = std::env::current_dir().unwrap();
+    //println!("pwd: {}",pwd.display());
 }
 
 fn main() {
