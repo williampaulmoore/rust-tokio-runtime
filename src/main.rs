@@ -2,6 +2,15 @@ use tokio::time;
 use log::Level;
 use tokio::io::AsyncReadExt;
 
+fn fib(n:i32) -> i32 {
+    match n {
+      0 => 0,
+      1 => 1,
+      n => fib(n-1) + fib(n-2),
+    }
+}
+
+
 async fn sleep() {
     log::info!("Sleeping");
     time::sleep(time::Duration::from_secs(1)).await;
@@ -14,6 +23,8 @@ async fn reader() {
     let mut contents = vec![];
     f.read_to_end(&mut contents).await.unwrap();
     log::info!("Read {} bytes",contents.len());
+
+    fib(40);
 }
 
 async fn run() {
